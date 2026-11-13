@@ -123,142 +123,179 @@
 
     </div>
 </main>
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Маленькое приключение ♡</title>
+<section id="quest" style="
+display:none;
+min-height:100vh;
+align-items:center;
+justify-content:center;
+padding:25px;
+background:#f8f0ec;
+">
+    <div class="card">
+        <div class="top-text">01 — LITTLE SECRET</div>
 
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Montserrat:wght@300;400;500&family=Parisienne&display=swap" rel="stylesheet">
+        <h1 style="font-size:42px;">Первый секрет</h1>
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        <p class="description">
+            Говорят, что самое интересное
+            иногда прячется прямо перед глазами.
+            Найди спрятанное сердечко!
+        </p>
+
+        <div id="hearts" style="
+        display:grid;
+        grid-template-columns:repeat(3,1fr);
+        gap:15px;
+        max-width:250px;
+        margin:30px auto;
+        "></div>
+
+        <p id="result" class="script"></p>
+
+        <button id="next" class="start-button"
+        style="display:none;">
+            ПРОДОЛЖИТЬ →
+        </button>
+    </div>
+</section>
+
+<script>
+const startButton = document.querySelector('.start-button');
+const quest = document.getElementById('quest');
+const intro = document.querySelector('.container');
+
+startButton.addEventListener('click', function() {
+    intro.style.display = 'none';
+    quest.style.display = 'flex';
+});
+
+const hearts = document.getElementById('hearts');
+const result = document.getElementById('result');
+const next = document.getElementById('next');
+
+const secret = 4;
+let completed = false;
+
+for (let i = 0; i < 9; i++) {
+    const heart = document.createElement('button');
+
+    heart.textContent = '♡';
+    heart.style.cssText = `
+        background:#f3e3df;
+        border:none;
+        border-radius:50%;
+        width:60px;
+        height:60px;
+        font-size:30px;
+        color:#c68f91;
+        cursor:pointer;
+        transition:.3s;
+    `;
+
+    heart.addEventListener('click', function() {
+        if (completed) return;
+
+        if (i === secret) {
+            completed = true;
+            heart.textContent = '♥';
+            heart.style.background = '#d6a5a3';
+
+            result.textContent = 'Ты нашёл его! ♡';
+            next.style.display = 'inline-block';
+        } else {
+            heart.textContent = '✿';
         }
+    });
 
-        body {
-            background: #f8f0ec;
-            color: #745d59;
-            font-family: 'Montserrat', sans-serif;
-            min-height: 100vh;
+    hearts.appendChild(heart);
+}
+</script>
+section id="quest" style="
+display:none;
+min-height:100vh;
+align-items:center;
+justify-content:center;
+padding:25px;
+background:#f8f0ec;
+">
+    <div class="card">
+        <div class="top-text">01 — LITTLE SECRET</div>
+
+        <h1 style="font-size:42px;">Первый секрет</h1>
+
+        <p class="description">
+            Говорят, что самое интересное
+            иногда прячется прямо перед глазами.
+            Найди спрятанное сердечко!
+        </p>
+
+        <div id="hearts" style="
+        display:grid;
+        grid-template-columns:repeat(3,1fr);
+        gap:15px;
+        max-width:250px;
+        margin:30px auto;
+        "></div>
+
+        <p id="result" class="script"></p>
+
+        <button id="next" class="start-button"
+        style="display:none;">
+            ПРОДОЛЖИТЬ →
+        </button>
+    </div>
+</section>
+
+<script>
+const startButton = document.querySelector('.start-button');
+const quest = document.getElementById('quest');
+const intro = document.querySelector('.container');
+
+startButton.addEventListener('click', function() {
+    intro.style.display = 'none';
+    quest.style.display = 'flex';
+});
+
+const hearts = document.getElementById('hearts');
+const result = document.getElementById('result');
+const next = document.getElementById('next');
+
+const secret = 4;
+let completed = false;
+
+for (let i = 0; i < 9; i++) {
+    const heart = document.createElement('button');
+
+    heart.textContent = '♡';
+    heart.style.cssText = `
+        background:#f3e3df;
+        border:none;
+        border-radius:50%;
+        width:60px;
+        height:60px;
+        font-size:30px;
+        color:#c68f91;
+        cursor:pointer;
+        transition:.3s;
+    `;
+
+    heart.addEventListener('click', function() {
+        if (completed) return;
+
+        if (i === secret) {
+            completed = true;
+            heart.textContent = '♥';
+            heart.style.background = '#d6a5a3';
+
+            result.textContent = 'Ты нашёл его! ♡';
+            next.style.display = 'inline-block';
+        } else {
+            heart.textContent = '✿';
         }
+    });
 
-        .container {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 25px;
-        }
-
-        .card {
-            background: #fffaf7;
-            border: 1px solid #eadbd5;
-            max-width: 480px;
-            width: 100%;
-            padding: 55px 30px;
-            text-align: center;
-            box-shadow: 0 15px 50px #9d77751a;
-            position: relative;
-        }
-
-        .top-text {
-            font-size: 10px;
-            letter-spacing: 4px;
-            color: #bb9290;
-            margin-bottom: 30px;
-        }
-
-        .envelope {
-            font-size: 75px;
-            margin-bottom: 20px;
-        }
-
-        h1 {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 48px;
-            font-weight: 500;
-            line-height: 1.1;
-        }
-
-        .script {
-            font-family: 'Parisienne', cursive;
-            color: #bd8588;
-            font-size: 35px;
-            margin-top: 15px;
-        }
-
-        .description {
-            font-size: 12px;
-            line-height: 2;
-            color: #967c77;
-            margin: 25px auto;
-            max-width: 330px;
-        }
-
-        .start-button {
-            background: #c68f91;
-            color: white;
-            border: none;
-            padding: 16px 30px;
-            letter-spacing: 2px;
-            font-size: 10px;
-            cursor: pointer;
-        }
-
-        .start-button:hover {
-            background: #a96f75;
-            transform: translateY(-3px);
-        }
-
-        .footer {
-            font-family: 'Parisienne', cursive;
-            font-size: 23px;
-            color: #bd9290;
-            margin-top: 35px;
-        }
-
-    </style>
-</head>
-
-<body>
-
-    <main class="container">
-        <div class="card">
-
-            <div class="top-text">A LITTLE SURPRISE FOR YOU</div>
-
-            <div class="envelope">💌</div>
-
-            <h1>
-                У меня есть кое-что<br>
-                для тебя...
-            </h1>
-
-            <div class="script">
-                только для тебя ♡
-            </div>
-
-            <p class="description">
-                Сегодня тебе предстоит небольшое
-                приключение. Несколько загадок,
-                секретов и кое-что очень приятное
-                в конце.
-            </p>
-
-            <button class="start-button">
-                НАЧАТЬ ПРИКЛЮЧЕНИЕ →
-            </button>
-
-            <div class="footer">
-                with love
-            </div>
-
-        </div>
-    </main>
-
+    hearts.appendChild(heart);
+}
+</script>
 </body>
 </html>
