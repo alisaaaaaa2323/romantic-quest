@@ -171,6 +171,37 @@ startButton.addEventListener('click', function() {
 
 const hearts = document.getElementById('hearts');
 const result = document.getElementById('result');
+   next.addEventListener('click', function() {
+    quest.style.display = 'none';
+    document.getElementById('question').style.display = 'flex';
+    window.scrollTo(0, 0);
+});
+
+function chooseAnswer(button, correct) {
+    const message = document.getElementById('questionMessage');
+    const nextButton = document.getElementById('questionNext');
+
+    if (nextButton.style.display === 'inline-block') return;
+
+    if (correct) {
+        button.classList.add('correct');
+        message.textContent = 'Именно! Самое ценное — в мелочах ♡';
+        nextButton.style.display = 'inline-block';
+    } else {
+        message.textContent = 'Попробуй ещё раз, подумай хорошенько ♡';
+    }
+}
+
+function goToLetter() {
+    document.getElementById('question').style.display = 'none';
+    document.getElementById('letterPage').style.display = 'flex';
+    window.scrollTo(0, 0);
+}
+
+function revealLetter() {
+    document.getElementById('secretLetter').style.display = 'block';
+    document.getElementById('openLetter').style.display = 'none';
+}
 const next = document.getElementById('next');
 
 const secret = 4;
@@ -296,6 +327,110 @@ for (let i = 0; i < 9; i++) {
 
     hearts.appendChild(heart);
 }
+   <!-- ВТОРОЕ ЗАДАНИЕ -->
+<section id="question" style="
+display:none;
+min-height:100vh;
+align-items:center;
+justify-content:center;
+padding:25px;
+background:#f8f0ec;
+">
+    <div class="card">
+        <div class="top-text">02 — A LITTLE QUESTION</div>
+
+        <div style="font-size:45px;margin-bottom:15px;">🌷</div>
+
+        <h1 style="font-size:42px;">
+            Маленький вопрос...
+        </h1>
+
+        <p class="description">
+            Что делает историю двух людей
+            по-настоящему особенной?
+        </p>
+
+        <div style="margin-top:25px;">
+            <button class="answer" onclick="chooseAnswer(this, false)">
+                Идеальные фотографии
+            </button>
+
+            <button class="answer" onclick="chooseAnswer(this, true)">
+                Маленькие моменты, которые помнят только двое
+            </button>
+
+            <button class="answer" onclick="chooseAnswer(this, false)">
+                Дорогие подарки
+            </button>
+        </div>
+
+        <p id="questionMessage" class="script"></p>
+
+        <button id="questionNext"
+        class="start-button"
+        style="display:none;"
+        onclick="goToLetter()">
+            ПРОДОЛЖИТЬ →
+        </button>
+    </div>
+</section>
+
+<!-- ТРЕТИЙ ЭТАП — ПИСЬМО -->
+<section id="letterPage" style="
+display:none;
+min-height:100vh;
+align-items:center;
+justify-content:center;
+padding:25px;
+background:#f8f0ec;
+">
+    <div class="card">
+        <div class="top-text">03 — SECRET LETTER</div>
+
+        <div style="font-size:65px;">💌</div>
+
+        <h1 style="font-size:43px;">
+            Письмо для тебя
+        </h1>
+
+        <p class="description">
+            Кажется, здесь спрятаны
+            кое-какие важные слова...
+        </p>
+
+        <button id="openLetter"
+        class="start-button"
+        onclick="revealLetter()">
+            ОТКРЫТЬ КОНВЕРТ ♡
+        </button>
+
+        <div id="secretLetter" style="
+        display:none;
+        background:#f5e8e2;
+        border:1px dashed #d8b5aa;
+        padding:25px;
+        margin-top:25px;
+        font-family:'Cormorant Garamond',serif;
+        font-size:22px;
+        line-height:1.7;
+        animation:appear .8s ease;
+        ">
+            Знаешь, самые прекрасные моменты
+            часто состоят из маленьких вещей.
+
+            <br><br>
+
+            Из случайных улыбок, долгих разговоров
+            и воспоминаний, которые хочется
+            переживать снова и снова.
+
+            <br><br>
+
+            И сегодня я хочу подарить тебе
+            ещё одно такое воспоминание. ♡
+        </div>
+    </div>
+</section>
 </script>
 </body>
 </html>
