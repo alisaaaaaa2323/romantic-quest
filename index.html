@@ -1,110 +1,295 @@
+!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Маленькое приключение ♡</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Montserrat:wght@300;400;500&family=Parisienne&display=swap" rel="stylesheet">
 
 <style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-    body {
-        background: #f8f0ec;
-        color: #745d59;
-        font-family: 'Montserrat', sans-serif;
-        min-height: 100vh;
-    }
+body {
+    min-height: 100vh;
+    background: #f8f0ec;
+    color: #745d59;
+    font-family: 'Montserrat', sans-serif;
+    overflow-x: hidden;
+}
 
-    .container {
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 25px;
-    }
+.page {
+    display: none;
+    min-height: 100vh;
+    align-items: center;
+    justify-content: center;
+    padding: 35px 18px;
+    position: relative;
+}
 
+.page.active {
+    display: flex;
+    animation: appear .8s ease;
+}
+
+@keyframes appear {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card {
+    background: #fffaf7;
+    border: 1px solid #eadbd5;
+    width: 100%;
+    max-width: 470px;
+    padding: 48px 27px;
+    text-align: center;
+    box-shadow: 0 15px 50px rgba(132,93,87,.09);
+    position: relative;
+}
+
+.card::before {
+    content: "♡";
+    position: absolute;
+    top: 12px;
+    left: 17px;
+    font-size: 22px;
+    color: #d7a7a4;
+}
+
+.card::after {
+    content: "♡";
+    position: absolute;
+    bottom: 12px;
+    right: 17px;
+    font-size: 22px;
+    color: #d7a7a4;
+}
+
+.small {
+    font-size: 10px;
+    letter-spacing: 4px;
+    color: #bb9290;
+    margin-bottom: 25px;
+}
+
+h1, h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 500;
+    line-height: 1.15;
+}
+
+h1 {
+    font-size: clamp(40px, 10vw, 53px);
+}
+
+h2 {
+    font-size: 40px;
+}
+
+.script {
+    font-family: 'Parisienne', cursive;
+    font-size: 35px;
+    color: #bd8588;
+    margin-top: 12px;
+}
+
+.description {
+    font-size: 12px;
+    line-height: 2;
+    color: #967c77;
+    margin: 22px auto;
+    max-width: 330px;
+}
+
+.envelope {
+    font-size: 76px;
+    margin: 15px 0 25px;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    50% { transform: translateY(-9px); }
+}
+
+.main-btn {
+    background: #c68f91;
+    color: white;
+    border: none;
+    padding: 16px 27px;
+    font-size: 10px;
+    letter-spacing: 2px;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: .3s;
+}
+
+.main-btn:hover {
+    background: #a96f75;
+    transform: translateY(-3px);
+}
+
+.answer {
+    display: block;
+    width: 100%;
+    background: #f7eeea;
+    color: #876b67;
+    border: 1px solid #eadbd5;
+    padding: 16px 12px;
+    margin: 12px 0;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    line-height: 1.6;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.answer:hover {
+    background: #efdcd8;
+}
+
+.answer.correct {
+    background: #e9d5d0;
+    border-color: #c68f91;
+}
+
+.heart-area {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 17px;
+    max-width: 245px;
+    margin: 30px auto;
+}
+
+.heart {
+    width: 65px;
+    height: 65px;
+    border: none;
+    border-radius: 50%;
+    background: #f3e3df;
+    color: #c68f91;
+    font-size: 34px;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.heart:hover {
+    transform: scale(1.13);
+}
+
+.heart.found {
+    background: #d6a5a3;
+    color: white;
+    animation: pop .5s ease;
+}
+
+@keyframes pop {
+    50% { transform: scale(1.3); }
+}
+
+.message {
+    min-height: 25px;
+    font-family: 'Parisienne', cursive;
+    font-size: 27px;
+    color: #bd8588;
+    margin: 15px 0;
+}
+
+.letter {
+    display: none;
+    background: #f7ece6;
+    border: 1px dashed #d8b5aa;
+    padding: 25px 20px;
+    margin-top: 25px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 21px;
+    line-height: 1.7;
+    animation: appear .8s ease;
+}
+
+.letter.open {
+    display: block;
+}
+
+.final-heart {
+    font-size: 75px;
+    color: #c68f91;
+    animation: pulse 1.6s infinite;
+}
+
+@keyframes pulse {
+    50% { transform: scale(1.15); }
+}
+
+.footer {
+   font-family: 'Parisienne', cursive;
+    font-size: 24px;
+    color: #bd9290;
+    margin-top: 30px;
+}
+.decoration {
+    position: fixed;
+    pointer-events: none;
+    color: #d9b1ae;
+    opacity: .55;
+    font-size: 24px;
+    animation: drift 6s ease-in-out infinite;
+    z-index: 0;
+}
+
+@keyframes drift {
+    50% {
+        transform: translateY(-18px) rotate(15deg);
+    }
+}
+
+.restart {
+    background: transparent;
+    color: #bd9290;
+    border: none;
+    font-size: 11px;
+    text-decoration: underline;
+    margin-top: 25px;
+    cursor: pointer;
+}
+
+@media(max-width: 380px) {
     .card {
-        background: #fffaf7;
-        border: 1px solid #eadbd5;
-        max-width: 480px;
-        width: 100%;
-        padding: 55px 30px;
-        text-align: center;
-        box-shadow: 0 15px 50px #9d77751a;
-        position: relative;
+        padding: 42px 20px;
     }
-
-    .top-text {
-        font-size: 10px;
-        letter-spacing: 4px;
-        color: #bb9290;
-        margin-bottom: 30px;
-    }
-
-    .envelope {
-        font-size: 75px;
-        margin-bottom: 20px;
-    }
-
-    h1 {
-        font-family: 'Cormorant Garamond', serif;
-        font-size: 48px;
-        font-weight: 500;
-        line-height: 1.1;
-    }
-
-    .script {
-        font-family: 'Parisienne', cursive;
-        color: #bd8588;
-        font-size: 35px;
-        margin-top: 15px;
-    }
-
-    .description {
-        font-size: 12px;
-        line-height: 2;
-        color: #967c77;
-        margin: 25px auto;
-        max-width: 330px;
-    }
-
-    .start-button {
-        background: #c68f91;
-        color: white;
-        border: none;
-        padding: 16px 30px;
-        letter-spacing: 2px;
-        font-size: 10px;
-        cursor: pointer;
-    }
-
-    .start-button:hover {
-        background: #a96f75;
-        transform: translateY(-3px);
-    }
-
-    .footer {
-        font-family: 'Parisienne', cursive;
-        font-size: 23px;
-        color: #bd9290;
-        margin-top: 35px;
-    }
-
+}
 </style>
-<main class="container">
+</head>
+
+<body>
+
+<div class="decoration" style="top:12%;left:8%">♡</div>
+<div class="decoration" style="top:25%;right:9%">✿</div>
+<div class="decoration" style="bottom:15%;left:12%">♡</div>
+<div class="decoration" style="bottom:22%;right:8%">✿</div>
+
+<!-- ЭТАП 1: НАЧАЛО -->
+
+<section class="page active" id="page1">
     <div class="card">
 
-        <div class="top-text">A LITTLE SURPRISE FOR YOU</div>
+        <div class="small">A LITTLE SURPRISE FOR YOU</div>
 
         <div class="envelope">💌</div>
 
-        <h1>
-            У меня есть кое-что<br>
-            для тебя...
-        </h1>
+        <h1>У меня есть кое-что<br>для тебя...</h1>
 
-        <div class="script">
-            только для тебя ♡
-        </div>
+        <div class="script">только для тебя ♡</div>
 
         <p class="description">
             Сегодня тебе предстоит небольшое
@@ -113,28 +298,23 @@
             в конце.
         </p>
 
-        <button class="start-button">
+        <button class="main-btn" onclick="showPage(2)">
             НАЧАТЬ ПРИКЛЮЧЕНИЕ →
         </button>
 
-        <div class="footer">
-            with love
-        </div>
-
+        <div class="footer">with love</div>
     </div>
-</main>
-<section id="quest" style="
-display:none;
-min-height:100vh;
-align-items:center;
-justify-content:center;
-padding:25px;
-background:#f8f0ec;
-">
-    <div class="card">
-        <div class="top-text">01 — LITTLE SECRET</div>
+</section>
 
-        <h1 style="font-size:42px;">Первый секрет</h1>
+
+<!-- ЭТАП 2: ПОИСК СЕРДЦА -->
+
+<section class="page" id="page2">
+    <div class="card">
+
+        <div class="small">01 — LITTLE SECRET</div>
+
+        <h2>Первый секрет</h2>
 
         <p class="description">
             Говорят, что самое интересное
@@ -142,279 +322,87 @@ background:#f8f0ec;
             Найди спрятанное сердечко!
         </p>
 
-        <div id="hearts" style="
-        display:grid;
-        grid-template-columns:repeat(3,1fr);
-        gap:15px;
-        max-width:250px;
-        margin:30px auto;
-        "></div>
+        <div class="heart-area" id="heartArea"></div>
 
-        <p id="result" class="script"></p>
+        <div class="message" id="heartMessage"></div>
 
-        <button id="next" class="start-button"
-        style="display:none;">
-            ПРОДОЛЖИТЬ →
+        <button class="main-btn"
+        id="heartNext"
+        style="display:none"
+        onclick="showPage(3)">
+            ИДЁМ ДАЛЬШЕ →
         </button>
+
     </div>
 </section>
 
-<script>
-const startButton = document.querySelector('.start-button');
-const quest = document.getElementById('quest');
-const intro = document.querySelector('.container');
 
-startButton.addEventListener('click', function() {
-    intro.style.display = 'none';
-    quest.style.display = 'flex';
-});
+<!-- ЭТАП 3: ВОПРОС -->
 
-const hearts = document.getElementById('hearts');
-const result = document.getElementById('result');
-   next.addEventListener('click', function() {
-    quest.style.display = 'none';
-    document.getElementById('question').style.display = 'flex';
-    window.scrollTo(0, 0);
-});
-
-function chooseAnswer(button, correct) {
-    const message = document.getElementById('questionMessage');
-    const nextButton = document.getElementById('questionNext');
-
-    if (nextButton.style.display === 'inline-block') return;
-
-    if (correct) {
-        button.classList.add('correct');
-        message.textContent = 'Именно! Самое ценное — в мелочах ♡';
-        nextButton.style.display = 'inline-block';
-    } else {
-        message.textContent = 'Попробуй ещё раз, подумай хорошенько ♡';
-    }
-}
-
-function goToLetter() {
-    document.getElementById('question').style.display = 'none';
-    document.getElementById('letterPage').style.display = 'flex';
-    window.scrollTo(0, 0);
-}
-
-function revealLetter() {
-    document.getElementById('secretLetter').style.display = 'block';
-    document.getElementById('openLetter').style.display = 'none';
-}
-const next = document.getElementById('next');
-
-const secret = 4;
-let completed = false;
-
-for (let i = 0; i < 9; i++) {
-    const heart = document.createElement('button');
-
-    heart.textContent = '♡';
-    heart.style.cssText = `
-        background:#f3e3df;
-        border:none;
-        border-radius:50%;
-        width:60px;
-        height:60px;
-        font-size:30px;
-        color:#c68f91;
-        cursor:pointer;
-        transition:.3s;
-    `;
-
-    heart.addEventListener('click', function() {
-        if (completed) return;
-
-        if (i === secret) {
-            completed = true;
-            heart.textContent = '♥';
-            heart.style.background = '#d6a5a3';
-
-            result.textContent = 'Ты нашёл его! ♡';
-            next.style.display = 'inline-block';
-        } else {
-            heart.textContent = '✿';
-        }
-    });
-
-    hearts.appendChild(heart);
-}
-</script>
-section id="quest" style="
-display:none;
-min-height:100vh;
-align-items:center;
-justify-content:center;
-padding:25px;
-background:#f8f0ec;
-">
+<section class="page" id="page3">
     <div class="card">
-        <div class="top-text">01 — LITTLE SECRET</div>
 
-        <h1 style="font-size:42px;">Первый секрет</h1>
+        <div class="small">02 — A LITTLE QUESTION</div>
 
-        <p class="description">
-            Говорят, что самое интересное
-            иногда прячется прямо перед глазами.
-            Найди спрятанное сердечко!
-        </p>
+        <div style="font-size:45px;margin-bottom:15px">🌷</div>
 
-        <div id="hearts" style="
-        display:grid;
-        grid-template-columns:repeat(3,1fr);
-        gap:15px;
-        max-width:250px;
-        margin:30px auto;
-        "></div>
-
-        <p id="result" class="script"></p>
-
-        <button id="next" class="start-button"
-        style="display:none;">
-            ПРОДОЛЖИТЬ →
-        </button>
-    </div>
-</section>
-
-<script>
-const startButton = document.querySelector('.start-button');
-const quest = document.getElementById('quest');
-const intro = document.querySelector('.container');
-
-startButton.addEventListener('click', function() {
-    intro.style.display = 'none';
-    quest.style.display = 'flex';
-});
-
-const hearts = document.getElementById('hearts');
-const result = document.getElementById('result');
-const next = document.getElementById('next');
-
-const secret = 4;
-let completed = false;
-
-for (let i = 0; i < 9; i++) {
-    const heart = document.createElement('button');
-
-    heart.textContent = '♡';
-    heart.style.cssText = `
-        background:#f3e3df;
-        border:none;
-        border-radius:50%;
-        width:60px;
-        height:60px;
-        font-size:30px;
-        color:#c68f91;
-        cursor:pointer;
-        transition:.3s;
-    `;
-
-    heart.addEventListener('click', function() {
-        if (completed) return;
-
-        if (i === secret) {
-            completed = true;
-            heart.textContent = '♥';
-            heart.style.background = '#d6a5a3';
-
-            result.textContent = 'Ты нашёл его! ♡';
-            next.style.display = 'inline-block';
-        } else {
-            heart.textContent = '✿';
-        }
-    });
-
-    hearts.appendChild(heart);
-}
-   <!-- ВТОРОЕ ЗАДАНИЕ -->
-<section id="question" style="
-display:none;
-min-height:100vh;
-align-items:center;
-justify-content:center;
-padding:25px;
-background:#f8f0ec;
-">
-    <div class="card">
-        <div class="top-text">02 — A LITTLE QUESTION</div>
-
-        <div style="font-size:45px;margin-bottom:15px;">🌷</div>
-
-        <h1 style="font-size:42px;">
-            Маленький вопрос...
-        </h1>
+        <h2>Маленький вопрос...</h2>
 
         <p class="description">
             Что делает историю двух людей
             по-настоящему особенной?
         </p>
 
-        <div style="margin-top:25px;">
-            <button class="answer" onclick="chooseAnswer(this, false)">
-                Идеальные фотографии
-            </button>
-
-            <button class="answer" onclick="chooseAnswer(this, true)">
-                Маленькие моменты, которые помнят только двое
-            </button>
-
-            <button class="answer" onclick="chooseAnswer(this, false)">
-                Дорогие подарки
-            </button>
-        </div>
-
-        <p id="questionMessage" class="script"></p>
-
-        <button id="questionNext"
-        class="start-button"
-        style="display:none;"
-        onclick="goToLetter()">
-            ПРОДОЛЖИТЬ →
+        <button class="answer" onclick="chooseAnswer(this,false)">
+            Идеальные фотографии
         </button>
+
+        <button class="answer" onclick="chooseAnswer(this,true)">
+            Маленькие моменты, которые помнят только двое
+        </button>
+
+        <button class="answer" onclick="chooseAnswer(this,false)">
+            Дорогие подарки
+        </button>
+
+        <div class="message" id="questionMessage"></div>
+
+        <button class="main-btn"
+        id="questionNext"
+        style="display:none"
+        onclick="showPage(4)">
+            ОТКРЫТЬ ПИСЬМО →
+        </button>
+
     </div>
 </section>
 
-<!-- ТРЕТИЙ ЭТАП — ПИСЬМО -->
-<section id="letterPage" style="
-display:none;
-min-height:100vh;
-align-items:center;
-justify-content:center;
-padding:25px;
-background:#f8f0ec;
-">
+
+<!-- ЭТАП 4: ПИСЬМО -->
+
+<section class="page" id="page4">
     <div class="card">
-        <div class="top-text">03 — SECRET LETTER</div>
 
-        <div style="font-size:65px;">💌</div>
+        <div class="small">03 — SECRET LETTER</div>
 
-        <h1 style="font-size:43px;">
-            Письмо для тебя
-        </h1>
+        <div class="envelope">✉️</div>
+
+        <h2>Письмо для тебя</h2>
 
         <p class="description">
             Кажется, здесь спрятаны
             кое-какие важные слова...
+            Хочешь узнать, что внутри?
         </p>
 
-        <button id="openLetter"
-        class="start-button"
+        <button class="main-btn"
+        id="openLetter"
         onclick="revealLetter()">
             ОТКРЫТЬ КОНВЕРТ ♡
         </button>
 
-        <div id="secretLetter" style="
-        display:none;
-        background:#f5e8e2;
-        border:1px dashed #d8b5aa;
-        padding:25px;
-        margin-top:25px;
-        font-family:'Cormorant Garamond',serif;
-        font-size:22px;
-        line-height:1.7;
-        animation:appear .8s ease;
-        ">
+        <div class="letter" id="secretLetter">
+
             Знаешь, самые прекрасные моменты
             часто состоят из маленьких вещей.
 
@@ -422,15 +410,253 @@ background:#f8f0ec;
 
             Из случайных улыбок, долгих разговоров
             и воспоминаний, которые хочется
-            переживать снова и снова.
+           переживать снова и снова.
 
             <br><br>
 
             И сегодня я хочу подарить тебе
             ещё одно такое воспоминание. ♡
+
         </div>
+
+        <button class="main-btn"
+        id="letterNext"
+        style="display:none"
+        onclick="showPage(5)">
+            УЗНАТЬ ФИНАЛ →
+        </button>
+
     </div>
 </section>
+
+
+<!-- ЭТАП 5: ФИНАЛ -->
+
+<section class="page" id="page5">
+    <div class="card">
+
+        <div class="small">04 — THE LAST QUESTION</div>
+
+        <div class="final-heart">♡</div>
+
+        <h1>Пойдём<br>на свидание?</h1>
+
+        <div class="script">у меня есть идея...</div>
+
+        <p class="description">
+            Я хочу провести этот день вместе с тобой.
+            Без спешки, с улыбками и приятными
+            воспоминаниями.
+        </p>
+
+        <button class="main-btn" onclick="finalAnswer('ДА! 💗')">
+            ДА, С УДОВОЛЬСТВИЕМ!
+        </button>
+
+        <button class="answer" onclick="finalAnswer('ХОЧУ УЗНАТЬ ПОДРОБНОСТИ ♡')">
+            А ЧТО МЕНЯ ЖДЁТ?
+        </button>
+
+        <div class="script" id="finalMessage"></div>
+
+        <div class="footer">
+            the end, but not our story...
+        </div>
+
+        <button class="restart" onclick="restartQuest()">
+            Пройти квест ещё раз
+        </button>
+
+    </div>
+</section>
+
+
+<script>
+
+// ПЕРЕКЛЮЧЕНИЕ СТРАНИЦ
+
+function showPage(number) {
+    document.querySelectorAll('.page').forEach(page => {
+        page.classList.remove('active');
+    });
+
+    document.getElementById('page' + number).classList.add('active');
+
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+}
+
+
+// ПОИСК СПРЯТАННОГО СЕРДЦА
+
+const heartArea = document.getElementById('heartArea');
+
+const secretHeart = 4;
+
+let heartFound = false;
+
+for (let i = 0; i < 9; i++) {
+
+    const button = document.createElement('button');
+
+    button.className = 'heart';
+    button.textContent = '♡';
+
+    button.addEventListener('click', function() {
+
+        if (heartFound) return;
+
+        if (i === secretHeart) {
+
+            heartFound = true;
+
+            button.textContent = '♥';
+            button.classList.add('found');
+
+            document.getElementById('heartMessage').textContent =
+                'Ты нашёл его! ♡';
+
+            document.getElementById('heartNext').style.display =
+                'inline-block';
+
+        } else {
+
+            button.textContent = '✿';
+
+            document.getElementById('heartMessage').textContent =
+                'Не совсем... Попробуй ещё раз!';
+
+            button.disabled = true;
+            button.style.opacity = '.5';
+        }
+    });
+
+    heartArea.appendChild(button);
+}
+
+
+// РОМАНТИЧЕСКАЯ ЗАГАДКА
+
+function chooseAnswer(button, correct) {
+
+    const message = document.getElementById('questionMessage');
+
+    const nextButton = document.getElementById('questionNext');
+
+    if (nextButton.style.display === 'inline-block') return;
+
+    if (correct) {
+
+        button.classList.add('correct');
+
+        message.textContent =
+            'Именно! Самое ценное — в мелочах ♡';
+
+        nextButton.style.display = 'inline-block';
+
+    } else {
+
+        message.textContent =
+            'Попробуй ещё раз, подумай хорошенько ♡';
+    }
+}
+
+
+// ОТКРЫТИЕ СЕКРЕТНОГО ПИСЬМА
+
+function revealLetter() {
+
+    document.getElementById('secretLetter').classList.add('open');
+
+    document.getElementById('openLetter').style.display =
+        'none';
+
+    document.getElementById('letterNext').style.display =
+        'inline-block';
+}
+
+
+// ФИНАЛЬНЫЙ ОТВЕТ
+
+function finalAnswer(answer) {
+
+    document.getElementById('finalMessage').textContent =
+        answer;
+}
+
+
+// ПЕРЕЗАПУСК КВЕСТА
+
+function restartQuest() {
+
+    heartFound = false;
+
+    heartArea.innerHTML = '';
+
+    document.getElementById('heartMessage').textContent = '';
+
+    document.getElementById('heartNext').style.display = 'none';
+
+    document.getElementById('questionMessage').textContent = '';
+   document.getElementById('questionNext').style.display = 'none';
+
+    document.querySelectorAll('#page3 .answer').forEach(button => {
+        button.classList.remove('correct');
+    });
+
+    document.getElementById('secretLetter').classList.remove('open');
+
+    document.getElementById('openLetter').style.display = 'inline-block';
+
+    document.getElementById('letterNext').style.display = 'none';
+
+    document.getElementById('finalMessage').textContent = '';
+
+    showPage(1);
+
+    // Создаём сердечки заново
+    for (let i = 0; i < 9; i++) {
+
+        const button = document.createElement('button');
+
+        button.className = 'heart';
+        button.textContent = '♡';
+
+        button.addEventListener('click', function() {
+
+            if (heartFound) return;
+
+            if (i === secretHeart) {
+
+                heartFound = true;
+
+                button.textContent = '♥';
+                button.classList.add('found');
+
+                document.getElementById('heartMessage').textContent =
+                    'Ты нашёл его! ♡';
+
+                document.getElementById('heartNext').style.display =
+                    'inline-block';
+
+            } else {
+
+                button.textContent = '✿';
+                button.disabled = true;
+                button.style.opacity = '.5';
+
+                document.getElementById('heartMessage').textContent =
+                    'Не совсем... Попробуй ещё раз!';
+            }
+        });
+
+        heartArea.appendChild(button);
+    }
+}
+
 </script>
+
 </body>
 </html>
